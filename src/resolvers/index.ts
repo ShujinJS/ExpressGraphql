@@ -9,8 +9,12 @@ export const resolvers = {
       const pokemons = await response.json();
       return pokemons;
     },
-    getUsers: async () => {
-      const response = await fetch(`${restApiUrl}/users`);
+    getUsers: async (_, { apiKey }) => {
+      const response = await fetch(`${restApiUrl}/users`, {
+        headers: {
+          authorization: apiKey,
+        },
+      });
       const users = await response.json();
       return users;
     },

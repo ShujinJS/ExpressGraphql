@@ -13,6 +13,7 @@ export const typeDefs = `#graphql
   }
 
   type User {
+    apiKey: String
     name: String!
     password: String!
   }
@@ -22,12 +23,22 @@ export const typeDefs = `#graphql
     user: User
   }
 
+  union GetUsersResponse = UsersResponse | ErrorResponse
+
+  type UsersResponse {
+    users: [User]
+  }
+
+  type ErrorResponse {
+    message: String
+  }
+
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     getPokemons: [Pokemon],
-    getUsers: [User]
+    getUsers(apiKey: String): [User]
   }
 
   type Mutation {
